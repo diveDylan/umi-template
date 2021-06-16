@@ -5,7 +5,6 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "jsx": "react-jsx",
-    "lib": ["node", "dom", "esnext"],
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": "./",
