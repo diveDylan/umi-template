@@ -18,7 +18,7 @@ $ yarn start
 
 ## 使用openApi相关
 
-自动生成`swagger ts `文件[🐠nemo](https://github.com/diveDylan/nemo)
+[🐠nemo](https://github.com/diveDylan/nemo) -- 自动生成`swagger ts `文件
 
 
 
@@ -34,7 +34,9 @@ main({
 ```
 
 
-字典（字典需要强语义化，不能使用数字作为key）、数据库列、表格相关[sandfish](https://github.com/diveDylan/sandfish)
+[sandfish](https://github.com/diveDylan/sandfish) -- 字典（字典需要强语义化，不能使用数字作为key）、数据库列、表格相关
+
+
 `sandfish`可以生成字典、antd列配置、表单配置、权限码
 ```ts
 // 字典，语义化写法
