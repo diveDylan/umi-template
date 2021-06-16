@@ -12,7 +12,6 @@ export default [
   },
   {
     path: '/test',
-    component: '@/pages/moduleFederation',
     name: '测试', // 兼容此写法
     icon: '*_*——',
     // 建议这里用sso的权限码
