@@ -2,7 +2,14 @@
 
 ⚡️一个极简的`umi+typescript`的后台模板
 
-## 起步
+## 使用
+
+安装
+
+```bash
+git clone https://github.com/diveDylan/umi-template.git
+
+```
 
 安装依赖
 
@@ -19,8 +26,6 @@ $ yarn start
 ## 使用openApi相关
 
 [🐠 nemo](https://github.com/diveDylan/nemo) -- 自动生成`swagger ts `文件
-
-
 
 
 ```js
@@ -109,7 +114,66 @@ more: `swagger.js`
 
 ### 关于表单
 
-1. `onchanges`事件
+我们把表单顶层视为一个事件处理中心，内层表单组件控制显示，不负责逻辑处理
+
+❌ 非常不推荐的写法
+
+1. 直接将`onchange`事件写在`Item`组件级别，官方也不推荐这种做法，这样可能会导致整个表单重载
+2. 在`Item`组件级别使用`setState`
+
+希冀于开发人员能把表单的`change`,`submit`和`reset`等事件封装称一个`hooks`文件。
+憧憬在项目里发现这样的写法
+
+```ts
+// form hooks
+
+function useForm() {
+  const [form] = Form.useForm()
+  // get select options here
+  const [options, setOptions] = useState<Option[]>()
+  async function queryOptions() {
+    const {options } = await Remote()
+    setOptions(options)
+  }
+  useEffect(() => {
+    queryOptions()
+  }, [])
+  function onValuesChange(changeValues, allValues) {
+    // your code here
+  }
+  function onFinish(e) {
+    // your code here
+  }
+  return {
+    form, 
+    onValuesChange,
+    onFinish,
+    options
+  }
+}
+
+```
+
+如果`Item`组件有相互联动我们仍不推荐这样使用，我们提供一个思路
+
+```ts
+
+const PeopleItem: React.FC = props => 
+  <Item nostyle shouldUpdate={(pre, cur) => pre !== cur}>
+    {
+      // 结构出所有需要使用的form事件
+      ({ getFieldValue}) => <Item name="people" label="people">
+        <Select
+          options={
+            getFieldValue('gender) === 'male' ? ['李白', '杰伦', '纳兰容若'] : ['苏菲玛索', '花木兰']
+          }
+        />
+      </Item>
+    }
+
+  </Item>
+
+```
  
 ### 接口开发的规范
 
