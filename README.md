@@ -106,6 +106,10 @@ more: `swagger.js`
   ｜--components // 组件目录
   ｜--hooks // hooks目录
 ```
+
+### 关于表单
+
+1. `onchanges`事件
  
 ### 接口开发的规范
 

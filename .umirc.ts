@@ -14,7 +14,6 @@ export default defineConfig({
   },
   externals,
   headScripts,
-  chunks: ['vendors', 'common', 'umi'],
   chainWebpack,
   // https://umijs.org/zh-CN/plugins/plugin-layout
   layout: {

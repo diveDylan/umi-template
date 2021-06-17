@@ -7,13 +7,14 @@ export default [
     name: '欢迎', // 兼容此写法
     // https://beta-pro.ant.design/docs/new-page-cn#%E5%9C%A8%E8%8F%9C%E5%8D%95%E4%B8%AD%E4%BD%BF%E7%94%A8-iconfont
     icon: '*_*———',
-    // 建议这里用sso的权限码
+    // 建议这里用sso的权限码 如需脚本自动生成请使用sandfish
     access: 'canUse',
   },
   {
-    path: '/test',
-    name: '测试', // 兼容此写法
+    path: '/list',
+    name: '列表页', // 兼容此写法
     icon: '*_*——',
+    component: '@/pages/list/index'
     // 建议这里用sso的权限码
   },
   // one children

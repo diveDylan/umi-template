@@ -7,7 +7,7 @@
  *  total: int
  * }
  */
- import { useState, useCallback,  } from 'react'
+ import { useState, useCallback, useEffect  } from 'react'
  import { useBoolean } from 'ahooks'
  import { PageInfoReq } from '@/typings/common'
  import { TablePaginationConfig } from 'antd/es/table'
@@ -16,7 +16,7 @@ import qs from 'qs'
 
  
  export interface UseListProps<T = any> {
-   action: (params: any) => Promise<{
+   action: (params?: any) => Promise<{
      /**
       * @description 0代表成功
       */
@@ -40,7 +40,7 @@ import qs from 'qs'
  }
  export default function useList<T = any>(props: UseListProps<T>): {
    setParams: Function
-   list: Array<T> | null
+   list: Array<T>
    params: Params
    paginationConfig: TablePaginationConfig
    tableLoading: boolean
@@ -48,6 +48,7 @@ import qs from 'qs'
  } {
    const { action, format, history } = props
    const [list, setList] = useState<T[]>([])
+   const [isHistory, { setTrue: setIsHistoryTrue, setFalse: setIsHistoryFalse} ] = useBoolean(false)
    const [
      tableLoading,
      { setTrue: setTableLoadingTrue, setFalse: setTableLoadingFalse },
@@ -63,28 +64,30 @@ import qs from 'qs'
    )
    // total
    const [total, setTotal] = useState<number>()
+ 
+  useEffect(() => {
+    if (isHistory) {
+      const url: string = location.pathname + '?' + qs.stringify(params, { arrayFormat: 'indices', strictNullHandling: true })
+      window.history.replaceState(
+        {},
+        `history_${Date.now()}`,
+        url
+      )
+    }
+  }, [isHistory, params])
+  
+
    
-   // history replacestate
-   const historySet: Function | undefined = history ? () => {
-      if (history) {
-        const replaceState = window.history.replaceState
-        replaceState(
-          {},
-          `lh_${Date.now()}`,
-          qs.stringify(params, { arrayFormat: 'indices', strictNullHandling: true })
-        )
-      }
-   } : undefined
    // 改造setParams
    function _setParams(value: any) {
-    historySet && historySet()
-     // 重置页码
-     setParams((pre) => ({
-       pageNo: 1,
-       pageSize: pre?.pageSize,
-       // 如果表单项变了会重新搜索第一页，页码则会覆盖
-       ...value,
-     }))
+    // 重置页码
+    setParams((pre) => ({
+      pageNo: 1,
+      pageSize: pre?.pageSize,
+      // 如果表单项变了会重新搜索第一页，页码则会覆盖
+      ...value,
+    }))
+    if (history) setIsHistoryTrue()
    }
  
    // 请求action
@@ -116,12 +119,11 @@ import qs from 'qs'
        current: params.pageNo,
        showTotal,
        onChange: (pageNo, pageSize?) => {
-        historySet && historySet()
          setParams((pre) => ({
-           ...pre, // 需要取最新的state
-           pageNo: pageNo,
-           pageSize: pageSize || params?.pageSize,
-         }))
+            ...pre, // 需要取最新的state
+            pageNo: pageNo,
+            pageSize: pageSize || params?.pageSize,
+          }))
        },
        total,
      },

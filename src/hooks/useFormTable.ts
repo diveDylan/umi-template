@@ -1,12 +1,14 @@
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import useList, { UseListProps } from './useList'
+import { FormInstance } from 'antd/es/form'
+import { TablePaginationConfig } from 'antd/es/table'
 import { Form} from 'antd'
 import qs from 'qs'
 
 export interface FormTable extends UseListProps {
   // 依赖更改重新请求接口的定义
-  deps: any[]
+  deps?: any[]
   /**
    * @description 自行控制回调的请求
    */
@@ -18,7 +20,13 @@ export interface FormTable extends UseListProps {
   formSetFieldsDeps?: any[]
 }
 
- export function useFormTable({
+export interface FormProps {
+  onReset: () => void
+  onFinish: (e:any) => void
+  form: FormInstance
+}
+
+export default function useFormTable<T>({
    action,
    deps,
    before,
@@ -26,7 +34,12 @@ export interface FormTable extends UseListProps {
    history,
    beforeFormSetFields,
    formSetFieldsDeps
- }: FormTable) {
+ }: FormTable): {
+   list: Array<T>
+   tableLoading: boolean
+   paginationConfig: TablePaginationConfig
+   formProps: FormProps
+ } {
 
   const {
     list,
@@ -35,7 +48,7 @@ export interface FormTable extends UseListProps {
     paginationConfig,
     tableLoading,
     fetchList,
-  } = useList({
+  } = useList<T>({
     action,
     format,
     history
@@ -50,36 +63,37 @@ export interface FormTable extends UseListProps {
 
   // setFields
   useEffect(() => {
-    if (history && location.search && beforeFormSetFields) {
-      beforeFormSetFields(
-        ()=>form.setFields(
-          // @ts-ignore
-          qs.parse(location.search.substring(1))
-        )
+    if (history && location.search) {
+      const setForm = () => form.setFieldsValue(
+        // @ts-ignore
+        qs.parse(location.search.substring(1))
       )
+      beforeFormSetFields ? beforeFormSetFields(
+        setForm
+      ) : setForm()
     }
   }, formSetFieldsDeps || [])
 
   const formProps = {
-    clear: () => {
+    onReset: () => {
       setParams({})
     },
-    submit: (e: object | undefined) => {
+    onFinish: (e: object | undefined) => {
       setParams(e)
     },
+    form
   }
   useEffect(() => {
     if (before) {
       before(fetchList)
     }
     else fetchList()
-  }, [params, ...deps])
+  }, [params, ...(deps||[])])
 
   return {
     list,
     paginationConfig,
     tableLoading,
-    form,
     formProps
   }
 }

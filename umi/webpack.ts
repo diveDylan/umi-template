@@ -29,7 +29,7 @@ export function chainWebpack(config, { env, webpack, createCSSRule}) {
           common: {
             name: 'common',
             test({ resource }: any) {
-              return /[\\/]src[\\/](components|utils|layouts|hooks|api|typings)[\\/]/.test(
+              return /[\\/]src[\\/](components|utils|hooks|api|typings)[\\/]/.test(
                 resource
               )
             },
