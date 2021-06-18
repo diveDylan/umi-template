@@ -17,7 +17,7 @@ const env = 'test03'
 
 main({
   // remote swagger api json
-  url: `https://openapi-gateway-${envMap[env]}.ocjfuli.com/openapigw/app/crm/v2/api-docs`,
+  url: 'remote url',
   // output path
   output: './src/api'
 })
@@ -35,7 +35,7 @@ const config = {
 };
 generateColumns(config);
 // 根据字典生成前端ts字典
-fetch('https://openapi-gateway-test03.ocjfuli.com/openapigw/app/crm/code/all', {
+fetch('remoteurl', {
   method: 'POST'
 }).then(res => res.json())
   .then(res => {
