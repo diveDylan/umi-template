@@ -1,4 +1,6 @@
+import { Params } from '@/hooks/useList'
 export const isDev: boolean = process.env.NODE_ENV === 'development'
+
 
 export enum JenkinsEnv {
   /**
@@ -23,10 +25,7 @@ export enum JenkinsEnv {
   PROD = 'prod'
 }
 
-export const PAGEINFO: {
-  pageNo: number
-  pageSize: number
-} = {
+export const PAGEINFO: Params<any> = {
   pageNo: 1,
   pageSize: 10
 }

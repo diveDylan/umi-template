@@ -33,15 +33,16 @@ import qs from 'qs'
    */
   history?: boolean
  }
- 
- 
- interface Params extends PageInfoReq {
-   [key: string]: any
- }
- export default function useList<T = any>(props: UseListProps<T>): {
+interface BaseParams extends PageInfoReq {
+  [key: string]: any
+}
+export type Params<T> = T extends BaseParams ? T : BaseParams
+
+
+ export default function useList<T = any, R = any>(props: UseListProps<T>): {
    setParams: Function
    list: Array<T>
-   params: Params
+   params: Params<R>
    paginationConfig: TablePaginationConfig
    tableLoading: boolean
    fetchList: Function
@@ -55,7 +56,7 @@ import qs from 'qs'
    ] = useBoolean(false)
    
    // form search params
-   const [params, setParams] = useState<Params>(PAGEINFO)
+   const [params, setParams] = useState<Params<R>>(PAGEINFO)
    // showTotal
    const showTotal = useCallback(
      (total) =>

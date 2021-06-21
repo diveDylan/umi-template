@@ -23,7 +23,7 @@
   "dependencies": {
     "@ant-design/pro-layout": "^6.19.4",
     "@ant-design/pro-table": "^2.41.0",
-    "@dylan92/nemo": "^0.0.4",
+    "@dylan92/nemo": "^0.0.6",
     "@types/qs": "^6.9.6",
     "@umijs/preset-react": "1.x",
     "ahooks": "^2.10.6",
