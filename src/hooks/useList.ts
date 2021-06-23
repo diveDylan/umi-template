@@ -15,7 +15,11 @@
 import qs from 'qs'
 
  
- export interface UseListProps<T = any> {
+ export interface UseListProps<T = any, R=any> {
+   /**
+    * @description 默认的入参
+    */
+   params?: Params<R>,
    action: (params?: any) => Promise<{
      /**
       * @description 0代表成功
@@ -39,7 +43,7 @@ interface BaseParams extends PageInfoReq {
 export type Params<T> = T extends BaseParams ? T : BaseParams
 
 
- export default function useList<T = any, R = any>(props: UseListProps<T>): {
+ export default function useList<T = any, R = any>(props: UseListProps<T, R>): {
    setParams: Function
    list: Array<T>
    params: Params<R>
@@ -49,14 +53,17 @@ export type Params<T> = T extends BaseParams ? T : BaseParams
  } {
    const { action, format, history } = props
    const [list, setList] = useState<T[]>([])
-   const [isHistory, { setTrue: setIsHistoryTrue, setFalse: setIsHistoryFalse} ] = useBoolean(false)
+   const [isHistory, { setTrue: setIsHistoryTrue, setFalse: setIsHistoryFalse} ] = useBoolean(!!props.history)
    const [
      tableLoading,
      { setTrue: setTableLoadingTrue, setFalse: setTableLoadingFalse },
    ] = useBoolean(false)
    
    // form search params
-   const [params, setParams] = useState<Params<R>>(PAGEINFO)
+   const [params, setParams] = useState<Params<R>>({
+     ...props.params,
+     ...PAGEINFO
+   })
    // showTotal
    const showTotal = useCallback(
      (total) =>

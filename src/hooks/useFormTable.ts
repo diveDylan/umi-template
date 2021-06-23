@@ -40,7 +40,7 @@ export default function useFormTable<T>({
    paginationConfig: TablePaginationConfig
    formProps: FormProps
  } {
-
+  const search = qs.parse(location.search.substring(1))
   const {
     list,
     params,
@@ -49,6 +49,7 @@ export default function useFormTable<T>({
     tableLoading,
     fetchList,
   } = useList<T>({
+    params: history ? search : {},
     action,
     format,
     history
@@ -64,10 +65,7 @@ export default function useFormTable<T>({
   // setFields
   useEffect(() => {
     if (history && location.search) {
-      const setForm = () => form.setFieldsValue(
-        // @ts-ignore
-        qs.parse(location.search.substring(1))
-      )
+      const setForm = () => form.setFieldsValue(search)
       beforeFormSetFields ? beforeFormSetFields(
         setForm
       ) : setForm()
