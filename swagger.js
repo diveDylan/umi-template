@@ -19,7 +19,7 @@ main({
   // remote swagger api json
   // url: 'remote',
   requestPath: '@/utils/request',
-  url: 'https://openapi-gateway-test05.ocjfuli.com/openapigw/app/crm/v2/api-docs',
+  url: 'remote address',
   // output path
   output: './src/api'
 })
