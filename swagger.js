@@ -17,7 +17,9 @@ const env = 'test03'
 
 main({
   // remote swagger api json
-  url: 'remote',
+  // url: 'remote',
+  requestPath: '@/utils/request',
+  url: 'https://openapi-gateway-test05.ocjfuli.com/openapigw/app/crm/v2/api-docs',
   // output path
   output: './src/api'
 })

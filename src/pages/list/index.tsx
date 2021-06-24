@@ -18,6 +18,7 @@ export default () => {
     tableLoading,
     formProps
   } = useGithubList()
+
   return (<>
     <SearchForm {...formProps}/>
     <Table
