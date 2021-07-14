@@ -1,10 +1,9 @@
 /**
- * @decription umi chain webpack 
+ * @decription umi chain webpack
  * @document https://umijs.org/zh-CN/config#chainwebpack
  * https://github.com/mozilla-neutrino/webpack-chain
  */
-// @ts-ignore
-export function chainWebpack(config, { env, webpack, createCSSRule}) {
+export function chainWebpack(config, { env, webpack, createCSSRule }) {
   /**
    * https://umijs.org/zh-CN/config#chunks
    * * @notice 结合chunks使用分片
@@ -21,7 +20,7 @@ export function chainWebpack(config, { env, webpack, createCSSRule}) {
           vendor: {
             name: 'vendors',
             test({ resource }: any) {
-              return /[\\/]node_modules[\\/]/.test(resource)
+              return /[\\/]node_modules[\\/]/.test(resource);
             },
             priority: 10,
           },
@@ -30,13 +29,13 @@ export function chainWebpack(config, { env, webpack, createCSSRule}) {
             name: 'common',
             test({ resource }: any) {
               return /[\\/]src[\\/](components|utils|hooks|api|typings)[\\/]/.test(
-                resource
-              )
+                resource,
+              );
             },
             priority: 14,
           },
         },
       },
     },
-  })
+  });
 }

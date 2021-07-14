@@ -14,14 +14,13 @@ export default [
     path: '/list',
     name: '列表页', // 兼容此写法
     icon: '*_*——',
-    component: '@/pages/list/index'
-    // 建议这里用sso的权限码
+    component: '@/pages/list/index',
   },
   // one children
   {
     path: '/oneChildren',
     name: '一个子元素都没有',
-    routes: []
+    routes: [],
   },
   {
     path: '/customer',
@@ -29,11 +28,11 @@ export default [
     routes: [
       {
         path: '/',
-        redirect: '/customer/my'
+        redirect: '/customer/my',
       },
       {
         path: '/customer/my',
-        name: '我的客户'
+        name: '我的客户',
       },
       {
         path: '/customer/team',
@@ -47,9 +46,9 @@ export default [
             path: '/customer/team/usa',
             name: '美国区',
           },
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
   { exact: true, path: '*', redirect: '/404' },
-]
+];
