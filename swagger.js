@@ -43,7 +43,7 @@ generateColumns(config);
 const { generateEnums } = require('enum-maker');
 const fetch = require('node-fetch');
 
-fetch('https://openapi-gateway-dev.ocjfuli.com/openapigw/app/crm/code/all', {
+fetch('https://openapi-gateway-test03.ocjfuli.com/openapigw/app/crm/code/all', {
   method: 'POST',
 })
   .then((res) => res.json())
