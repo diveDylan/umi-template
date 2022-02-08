@@ -2,7 +2,7 @@
  * @description 接口处理
  */
 
-const main = require('@dylan92/nemo');
+const main = require('@pregalaxyer/nemo');
 // const fetch = require('node-fetch')
 const { generateColumns } = require('sandfish');
 
