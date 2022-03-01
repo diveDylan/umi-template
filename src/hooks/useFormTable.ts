@@ -43,8 +43,8 @@ export default function useFormTable<T>({
 } {
   const search = qs.parse(location.search.substring(1));
   const searchParams =
-    initParams ||
-    (history && location.search && qs.parse(location.search.substring(1)));
+    (history && location.search && qs.parse(location.search.substring(1))) ||
+    initParams;
   const { list, params, setParams, paginationConfig, tableLoading, fetchList } =
     useList<T>({
       action,
@@ -63,7 +63,8 @@ export default function useFormTable<T>({
   // setFields
   useEffect(() => {
     if (searchParams) {
-      const setForm = () => form.setFieldsValue(searchParams);
+      //setForm 回调时将format值回传
+      const setForm = (params = searchParams) => form.setFieldsValue(params);
       beforeFormSetFields ? beforeFormSetFields(setForm) : setForm();
     }
   }, formSetFieldsDeps || []);

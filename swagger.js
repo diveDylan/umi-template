@@ -3,7 +3,23 @@
  */
 const Sardine = require('sardine');
 
-const sardine = new Sardine({
+const main = require('@pregalaxyer/nemo');
+// const fetch = require('node-fetch')
+
+// 业务系统环境映射
+const envMap = {
+  test03: 'test03',
+  test05: 'test05',
+  dev: 'dev',
+  stage: 'stage',
+};
+// swagger的环境
+const env = 'test03';
+
+main({
+  // remote swagger api json
+  // url: 'remote',
+  // requestPath: '@/utils/request',
   url: 'https://petstore.swagger.io/v2/swagger.json',
   port: 9000,
 });
