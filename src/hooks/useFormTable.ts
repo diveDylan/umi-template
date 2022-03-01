@@ -43,7 +43,8 @@ export default function useFormTable<T>({
 } {
   const search = qs.parse(location.search.substring(1));
   const searchParams =
-    history && location.search && qs.parse(location.search.substring(1));
+    initParams ||
+    (history && location.search && qs.parse(location.search.substring(1)));
   const { list, params, setParams, paginationConfig, tableLoading, fetchList } =
     useList<T>({
       action,
